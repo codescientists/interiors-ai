@@ -1,27 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*{
+    font-family: "Darker Grotesque", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+
+/* Necessary styles for the scroll container */
+.scroll-container {
+  position: relative;
+  overflow: hidden;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.scroll-horizontal {
+  display: flex;
+  flex-wrap: nowrap;
+  will-change: transform;
 }
+
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .container {
+        @apply px-6 lg:px-28
+    }
 }
