@@ -6,6 +6,7 @@
 
 *{
     font-family: "Darker Grotesque", sans-serif;
+    font-weight: 500;
 }
 
 
@@ -26,4 +27,17 @@
     .container {
         @apply px-6 lg:px-28
     }
+}
+
+/* =====  CLERK OVERRIDES */
+.cl-userButtonBox {
+  display: flex;
+  flex-flow: row-reverse;
+  gap: 12px;
+}
+
+.cl-userButtonOuterIdentifier {
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
 }

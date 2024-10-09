@@ -110,6 +110,7 @@ const MainContent = () => {
 
       {/* Image Preview Section */}
       <div className="mb-5">
+z
         {image !== null ? (
           <div className="relative w-[32rem] h-[28rem] mx-auto border border-gray-500 rounded-xl overflow-hidden mb-5">
             <img
@@ -150,11 +151,11 @@ const MainContent = () => {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="Provide a prompt for AI Image Generation"
-          className="flex-grow py-2 px-2 px-3 rounded bg-white text-black text-xl font-medium border-none mr-3"
+          className="flex-grow py-2 px-2 rounded bg-white text-black text-xl font-medium border-none mr-3"
         />
         <button
           onClick={handleGenerateImage}
-          className={`bg-orange-600 text-white py-2 px-2 px-4 rounded cursor-pointer ${loading && 'opacity-50 cursor-not-allowed'}`}
+          className={`bg-orange-600 text-white py-2 px-2 rounded cursor-pointer ${loading && 'opacity-50 cursor-not-allowed'}`}
           disabled={loading}
         >
           {loading ? 'Generating...' : 'Generate'}

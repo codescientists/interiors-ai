@@ -3,6 +3,7 @@ import Features from "@/components/sections/Features";
 import FeaturedArticles from "@/components/sections/FeautredArticles";
 import Gallery from "@/components/sections/Gallery";
 import HomeHero from "@/components/sections/HomeHero";
+import Pricing from "@/components/sections/Pricing";
 import Services from "@/components/sections/Services";
 import Testimonials from "@/components/sections/Testimonials";
 import Footer from "@/components/shared/Footer";
@@ -18,6 +19,7 @@ export default function Home() {
       <Services />
       <Features />
       <Gallery />
+      <Pricing />
       <Testimonials />
       <FeaturedArticles />
       <Footer />
