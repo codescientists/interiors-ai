@@ -55,15 +55,6 @@ export default function ImageToImageForm() {
     if (e.target.files && e.target.files[0]) {
       setImage(e.target.files[0]);
     }
-
-    // Automatically upload to Cloudinary after generation
-    // const uploadedUrl = await uploadImage(image);
-
-    // if(uploadedUrl) {
-    //   setUserImageUrl(uploadedUrl);
-    //   toast.success("Image Uploaded!");
-    // }
-
   };
 
   const handleDesignChange = (e: any) => {
@@ -84,12 +75,20 @@ export default function ImageToImageForm() {
       toast.error('Insufficient Credits: Please buy some credits to render your design.')
     }
     else{
+      // Uploading image to cloudinary
+      const uploadedUrl = await uploadImage(image);
+
+      if(uploadedUrl) {
+        setUserImageUrl(uploadedUrl);
+        toast.success("Image Uploaded!");
+      }
+
       // Generate the prompt based on selected options
       const selectedDesigns = Object.keys(designTypes)
       .filter(key => designTypes[key])
       .join(' and ');
 
-      const generatedPrompt = `${userImageUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
+      const generatedPrompt = `${uploadedUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
 
       const response = await fetch('/api/generate-image', {
         method: 'POST',

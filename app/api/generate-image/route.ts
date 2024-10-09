@@ -1,5 +1,3 @@
-
-import { updateCredits } from '@/lib/actions/user.actions';
 import { NextRequest, NextResponse } from 'next/server';
 import fetch from 'node-fetch';
 
@@ -13,7 +11,6 @@ export async function POST(req: NextRequest) {
   try {
     // @ts-ignore
     const { prompt } = await req.json();
-    console.log(prompt)
 
     if (!prompt) {
       return NextResponse.json({ error: 'Missing prompt in request body.' }, { status: 400 });
