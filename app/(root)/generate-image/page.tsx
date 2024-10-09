@@ -76,19 +76,19 @@ export default function ImageToImageForm() {
     }
     else{
       // Uploading image to cloudinary
-      const uploadedUrl = await uploadImage(image);
+      // const uploadedUrl = await uploadImage(image);
 
-      if(uploadedUrl) {
-        setUserImageUrl(uploadedUrl);
-        toast.success("Image Uploaded!");
-      }
+      // if(uploadedUrl) {
+      //   setUserImageUrl(uploadedUrl);
+      //   toast.success("Image Uploaded!");
+      // }
 
       // Generate the prompt based on selected options
       const selectedDesigns = Object.keys(designTypes)
       .filter(key => designTypes[key])
       .join(' and ');
 
-      const generatedPrompt = `${uploadedUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
+      const generatedPrompt = `${userImageUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
 
       const response = await fetch('/api/generate-image', {
         method: 'POST',

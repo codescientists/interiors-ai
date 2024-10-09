@@ -111,9 +111,6 @@ const Header = () => {
           className="mt-10 w-fit mx-auto font-semibold border-2 border-black flex items-center justify-center space-x-2 overflow-hidden rounded-lg text-lg hover:bg-[#5ac1ff] transition duration-300"
         >
           <span className="px-3">Redesign yours →</span>
-          {/* <span className="border-l-2 border-black bg-[#5ac1ff] p-3">
-            <Headset />
-          </span> */}
         </a>
       </div>
 

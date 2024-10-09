@@ -10,35 +10,36 @@ if (!apiKey) {
 export async function POST(req: NextRequest) {
   try {
     // @ts-ignore
-    const { prompt } = await req.json();
+    // const { prompt } = await req.json();
 
-    if (!prompt) {
-      return NextResponse.json({ error: 'Missing prompt in request body.' }, { status: 400 });
-    }
+    // if (!prompt) {
+    //   return NextResponse.json({ error: 'Missing prompt in request body.' }, { status: 400 });
+    // }
 
-    const url = "https://api.imaginepro.ai/api/v1/midjourney/imagine";
+    // const url = "https://api.imaginepro.ai/api/v1/midjourney/imagine";
     
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        prompt: prompt,
-      }),
-    };
+    // const options = {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     Authorization: `Bearer ${apiKey}`,
+    //   },
+    //   body: JSON.stringify({
+    //     prompt: prompt,
+    //   }),
+    // };
     
-    const response = await fetch(url, options);
+    // const response = await fetch(url, options);
     
-    // Check if the response is ok (status code 2xx)
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+    // // Check if the response is ok (status code 2xx)
+    // if (!response.ok) {
+    //   throw new Error(`HTTP error! Status: ${response.status}`);
+    // }
 
-    const data = await response.json();
+    // const data = await response.json();
 
-    const progressUrl = `https://api.imaginepro.ai/api/v1/midjourney/message/${data.messageId}`;
+    const progressUrl = `https://api.imaginepro.ai/api/v1/midjourney/message/34f02a21-68c2-4b4e-baa0-4f95668198a2`;
+    // const progressUrl = `https://api.imaginepro.ai/api/v1/midjourney/message/${data.messageId}`;
     
     const progressOptions = {
       method: 'GET',
