@@ -164,7 +164,7 @@ const Header = () => {
                   <span className="sr-only">Loading...</span>
               </div>      
             :
-              <h5 className="font-semibold">Credits : {credits}</h5>
+              <h5 className="font-semibold">Available Generations : {credits}</h5>
             }
           
             <UserButton />

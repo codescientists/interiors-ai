@@ -1,11 +1,14 @@
 "use client"
 
+import { createImage } from '@/lib/actions/images.action';
 import { createUser, getUserById, updateCredits } from '@/lib/actions/user.actions';
 import { uploadImage } from '@/lib/utils';
 import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import { FaDownload } from 'react-icons/fa';
+import { MdOutlineFileDownload, MdOutlinePublish } from 'react-icons/md';
 
 export default function ImageToImageForm() {
   const [image, setImage] = useState(null);
@@ -28,6 +31,7 @@ export default function ImageToImageForm() {
   const [credits, setCredits] = useState(0)
   const [loadingCredits, setLoadingCredits] = useState(true)
   const [userId, setUserId] = useState<string | null>(null)
+  const [publishing, setPublishing] = useState(false)
 
   const { user, isLoaded } = useUser()
   
@@ -90,6 +94,8 @@ export default function ImageToImageForm() {
 
       const generatedPrompt = `${userImageUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
 
+      setPrompt(generatedPrompt)
+
       const response = await fetch('/api/generate-image', {
         method: 'POST',
         body: JSON.stringify({
@@ -103,20 +109,46 @@ export default function ImageToImageForm() {
         alert(data.error);
       } else {
         setResultImages(data?.progress?.images);
-        await updateCredits(userId, -10);
-        toast.success('10 credits debited.')
+        await updateCredits(userId, -1);
+        toast.success('1 point debited.')
       }
     }
 
     setLoading(false);
   };
 
+  const publishImage = async (imageUrl: any) => {
+    setPublishing(true)
+    
+    try{
+      const uploadedUrl = await uploadImage(imageUrl);
+
+      const newImage = await createImage({
+        userId: userId,
+        prompt: prompt,
+        image: uploadedUrl,
+      })
+
+      if(newImage) {
+        alert("Design published")
+      }
+    } catch (error) {
+      console.error('Error publishing image:', error);
+    } finally {
+      setPublishing(false);
+    }
+    
+  } 
+
   
   return (
-    <section className="grid grid-cols-12 bg-[#1E1F20] text-white min-h-screen">
-      <aside className="col-span-2 w-full p-5 flex flex-col justify-between">
+    <section className="grid grid-cols-12 min-h-screen">
+      <div className="absolute top-0 z-[-2] h-screen w-screen bg-white bg-[radial-gradient(100%_50%_at_50%_0%,rgba(0,163,255,0.13)_0,rgba(0,163,255,0)_50%,rgba(0,163,255,0)_100%)]"></div>
+      <aside className="col-span-2 w-full bg-slate-50 p-5 flex flex-col justify-between">
         <div className="text-xl font-semibold">
-          <Link href={`/`} className="text-white text-2xl font-bold mb-5">Interiores.AI</Link>
+            <Link href={`/`} className="logo text-5xl font-bold">
+                <img src="logo.svg" alt="interiors.ai" />
+            </Link>
         </div>
         <div className="flex flex-col items-center">
             {loadingCredits ?
@@ -128,13 +160,13 @@ export default function ImageToImageForm() {
                   <span className="sr-only">Loading...</span>
               </div>      
             :
-              <h5 className="font-semibold my-4 text-xl">Credits Available : {credits}</h5>
+              <h5 className="font-semibold my-4 text-lg">Generations Available : {credits}</h5>
             }
           <div className="flex items-center cursor-pointer border-2 rounded-full gap-2 px-3 mb-4 py-2">
             <UserButton showName />
           </div>
           <Link href={`/pricing`} className="bg-teal-600 text-white py-2 px-4 w-full text-center rounded cursor-pointer">
-            Buy Credits
+            Upgrade Premium
           </Link>
         </div>
       </aside>
@@ -144,7 +176,7 @@ export default function ImageToImageForm() {
           <h1 className="text-2xl font-semibold mb-4 text-start">Design your room</h1>
 
           <div className="flex flex-col">
-            <label htmlFor="image" className="mb-2 text-md font-medium text-gray-200">
+            <label htmlFor="image" className="mb-2 text-md font-medium">
               Upload Image:
             </label>
             {
@@ -160,21 +192,21 @@ export default function ImageToImageForm() {
                   id="image"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="border border-gray-300 rounded-md px-3 py-2 text-md bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="border border-gray-300 rounded-md px-3 py-2 text-md focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
             }
             
           </div>
 
           <div className="flex flex-col">
-            <label htmlFor="roomType" className="mb-2 text-md font-medium text-gray-200">
+            <label htmlFor="roomType" className="mb-2 text-md font-medium">
               Select Room Type:
             </label>
             <select
               id="roomType"
               value={roomType}
               onChange={(e) => setRoomType(e.target.value)}
-              className="border border-gray-300 rounded-md px-3 py-2 text-md bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="border border-gray-300 rounded-md px-3 py-2 text-md focus:outline-none focus:ring-2 focus:ring-teal-500"
             >
               <option value="">--Select Room Type--</option>
               <option value="Dining Room">Dining Room</option>
@@ -185,7 +217,7 @@ export default function ImageToImageForm() {
           </div>
 
           <div className="flex flex-col">
-            <label className="mb-2 text-md font-medium text-gray-200">Select Design Types:</label>
+            <label className="mb-2 text-md font-medium">Select Design Types:</label>
             <div className="grid grid-cols-4 gap-4">
               {Object.keys(designTypes).map((type) => (
                 <label key={type} className="flex items-center cursor-pointer">
@@ -196,7 +228,7 @@ export default function ImageToImageForm() {
                     onChange={handleDesignChange}
                     className="hidden" // Hide the default checkbox
                   />
-                  <span className={`flex flex-col items-center justify-center border-2 overflow-hidden rounded-md ${designTypes[type] ? 'border-blue-400' : 'border-gray-300'}`}>
+                  <span className={`flex flex-col items-center justify-center border-2 overflow-hidden rounded-md ${designTypes[type] ? 'border-teal-400' : 'border-gray-300'}`}>
                     <img 
                       src={`/design/${type}.png`} // Make sure to replace this with the actual path to your images
                       alt={`${type} design`}
@@ -215,12 +247,12 @@ export default function ImageToImageForm() {
             disabled={loading}
             className={`w-full py-2 px-4 text-white rounded-md focus:outline-none disabled:bg-gray-600 ${loading
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600'
+              : 'bg-teal-500 hover:bg-teal-600'
               }`}
           >
             {loading ? 'Generating...' : 'Generate'}
           </button>
-          <p className="text-end w-full">Requires: 10 credits</p>
+          <p className="text-end w-full">Requires: 1 point</p>
         </form>
 
         <div className="col-span-10 md:col-span-5 px-8 mt-10 md:mt-0">
@@ -229,11 +261,30 @@ export default function ImageToImageForm() {
             <div className="grid grid-cols-2 gap-5">
               {
                 resultImages?.map((image) => (
-                  <img
-                    src={image}
-                    alt="Generated Result"
-                    className="w-full h-full border border-gray-300 rounded-md"
-                  />
+                  <div className="relative w-full h-full overflow-hidden border border-gray-300 rounded-lg">
+                    <img
+                      src={image}
+                      alt="Generated Result"
+                      className="w-full h-full"
+                      />
+                    <div className="absolute bottom-2 right-2 flex items-center space-x-2">
+                      <button
+                          onClick={() => publishImage(image)}
+                          title="Publish"
+                          className="bg-black text-white opacity-70 p-2 font-semibold text-lg rounded cursor-pointer"
+                      >
+                          <MdOutlinePublish />
+                      </button>
+                      <a
+                          href={image}
+                          download="generated_image"
+                          className="bg-black text-white opacity-70 p-2 font-semibold text-lg rounded cursor-pointer"
+                          title="Download"
+                      >
+                          <MdOutlineFileDownload />
+                      </a>
+                    </div>
+                  </div>
                 ))
               }
            </div>
@@ -241,16 +292,16 @@ export default function ImageToImageForm() {
           :
           (
               <div className="grid grid-cols-2 gap-5">
-                <div className="bg-gray-800 text-gray-400 w-full h-64 text-center flex items-center justify-center">
+                <div className="bg-gray-200 text-gray-600 w-full h-64 text-center flex items-center justify-center">
                   <p>Rendered image</p>
                 </div>
-                <div className="bg-gray-800 text-gray-400 w-full h-64 text-center flex items-center justify-center">
+                <div className="bg-gray-200 text-gray-600 w-full h-64 text-center flex items-center justify-center">
                   <p>Rendered image</p>
                 </div>
-                <div className="bg-gray-800 text-gray-400 w-full h-64 text-center flex items-center justify-center">
+                <div className="bg-gray-200 text-gray-600 w-full h-64 text-center flex items-center justify-center">
                   <p>Rendered image</p>
                 </div>
-                <div className="bg-gray-800 text-gray-400 w-full h-64 text-center flex items-center justify-center">
+                <div className="bg-gray-200 text-gray-600 w-full h-64 text-center flex items-center justify-center">
                   <p>Rendered image</p>
                 </div>
               </div>
@@ -259,8 +310,8 @@ export default function ImageToImageForm() {
         </div>
       </div>
 
-      <aside className="col-span-2 w-full p-5">
-        <h3 className="text-gray-200 text-sm mb-3">Furnitures You Need To Buy</h3>
+      <aside className="col-span-2 bg-slate-50 w-full p-5">
+        <h3 className="text-black text-lg font-semibold mb-3">Furnitures You Need To Buy</h3>
         <div className="space-y-3">
           <img
             src="/services/1.jpeg"

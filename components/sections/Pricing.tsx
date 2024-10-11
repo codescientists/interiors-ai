@@ -88,16 +88,16 @@ const Pricing = () => {
                 <SignedIn>
                   {
                     plan.name == 'Trial Plan' ?
-                        <button 
-                        className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-                        style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
-                            <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                                Free
-                            </span>
-                            <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                                Free
-                            </span>
-                        </button>
+                      <button 
+                      className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
+                      style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
+                          <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                              Free
+                          </span>
+                          <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                              Free
+                          </span>
+                      </button>
                     :
                     <Checkout
                         plan={plan.name}

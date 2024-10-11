@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import { useState } from "react";
 
 export default function HomeHero() {
@@ -48,16 +49,18 @@ export default function HomeHero() {
             photo, choose a style, <br /> and let AI create the perfect room for you.
           </p>
           <div className="flex space-x-4">
-            <button 
-              className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-              style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
-              <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                Get Started Now
-              </span>
-              <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                Get Started Now
-              </span>
-            </button>
+            <Link href={`/sign-up`}>
+              <button 
+                className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
+                style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
+                <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                  Get Started Now
+                </span>
+                <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                  Get Started Now
+                </span>
+              </button>
+            </Link>
             <button className="group relative overflow-hidden border border-blue-600 text-black bg-[#9ef0ff] py-3 px-8 rounded-xl text-xl font-semibold">
               <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
                 More About us
