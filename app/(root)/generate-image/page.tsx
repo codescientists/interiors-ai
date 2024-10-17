@@ -7,7 +7,6 @@ import { UserButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { FaDownload } from 'react-icons/fa';
 import { MdOutlineFileDownload, MdOutlinePublish } from 'react-icons/md';
 
 export default function ImageToImageForm() {
@@ -32,6 +31,7 @@ export default function ImageToImageForm() {
   const [loadingCredits, setLoadingCredits] = useState(true)
   const [userId, setUserId] = useState<string | null>(null)
   const [publishing, setPublishing] = useState(false)
+  const [messageId, setMessageId] = useState('')
 
   const { user, isLoaded } = useUser()
   
@@ -80,19 +80,19 @@ export default function ImageToImageForm() {
     }
     else{
       // Uploading image to cloudinary
-      // const uploadedUrl = await uploadImage(image);
+      const uploadedUrl = await uploadImage(image);
 
-      // if(uploadedUrl) {
-      //   setUserImageUrl(uploadedUrl);
-      //   toast.success("Image Uploaded!");
-      // }
+      if(uploadedUrl) {
+        setUserImageUrl(uploadedUrl);
+        toast.success("Image Uploaded!");
+      }
 
       // Generate the prompt based on selected options
       const selectedDesigns = Object.keys(designTypes)
       .filter(key => designTypes[key])
       .join(' and ');
 
-      const generatedPrompt = `${userImageUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
+      const generatedPrompt = `${uploadedUrl} Redesign the uploaded image to create a beautiful ${roomType} with a ${selectedDesigns} style. The room should be inviting and well-lit, featuring elegant furnishings and a harmonious color palette. Focus on enhancing the overall aesthetic and functionality of the space.`;
 
       setPrompt(generatedPrompt)
 
@@ -103,18 +103,25 @@ export default function ImageToImageForm() {
         }),
       });
 
-      const data = await response.json();
+      const res = await response.json();
 
-      if (data.error) {
-        alert(data.error);
-      } else {
+      setMessageId(res?.messageId)
+
+      setTimeout(async () => {
+        const response = await fetch(`/api/get-progress?msgId=${res?.messageId}`, {
+          method: 'GET',
+        }); 
+  
+        const data = await response.json();
         setResultImages(data?.progress?.images);
         await updateCredits(userId, -1);
         toast.success('1 point debited.')
-      }
+
+        setLoading(false);
+      }, 60000);
+
     }
 
-    setLoading(false);
   };
 
   const publishImage = async (imageUrl: any) => {
@@ -257,7 +264,7 @@ export default function ImageToImageForm() {
 
         <div className="col-span-10 md:col-span-5 px-8 mt-10 md:mt-0">
           <h2 className="text-xl font-semibold mb-4">Rendered Image</h2>
-          {resultImages !== null ? (
+          {resultImages !== null && (
             <div className="grid grid-cols-2 gap-5">
               {
                 resultImages?.map((image) => (
@@ -289,8 +296,8 @@ export default function ImageToImageForm() {
               }
            </div>
           )
-          :
-          (
+          }
+          {(resultImages == null && loading == false) && (
               <div className="grid grid-cols-2 gap-5">
                 <div className="bg-gray-200 text-gray-600 w-full h-64 text-center flex items-center justify-center">
                   <p>Rendered image</p>
@@ -305,7 +312,11 @@ export default function ImageToImageForm() {
                   <p>Rendered image</p>
                 </div>
               </div>
-          )
+          )}
+          {
+            loading && <div className="flex items-center justify-center w-full min-h-72">
+              <p>Rendering images, please wait...</p>
+            </div>
           }
         </div>
       </div>

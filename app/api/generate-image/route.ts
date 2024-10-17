@@ -9,7 +9,6 @@ if (!apiKey) {
 
 export async function POST(req: NextRequest) {
   try {
-    // @ts-ignore
     // const { prompt } = await req.json();
 
     // if (!prompt) {
@@ -38,27 +37,13 @@ export async function POST(req: NextRequest) {
 
     // const data = await response.json();
 
-    const progressUrl = `https://api.imaginepro.ai/api/v1/midjourney/message/34f02a21-68c2-4b4e-baa0-4f95668198a2`;
-    // const progressUrl = `https://api.imaginepro.ai/api/v1/midjourney/message/${data.messageId}`;
-    
-    const progressOptions = {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${apiKey}`,
-      },
-    };
-    
-    const progressResponse = await fetch(progressUrl, progressOptions);
-    
-    // Check if the response is ok (status code 2xx)
-    if (!progressResponse.ok) {
-      throw new Error(`HTTP error! Status: ${progressResponse.status}`);
-    }
+    // return NextResponse.json({ messageId: data?.messageId });
 
-    const progress = await progressResponse.json();
 
-    return NextResponse.json({ progress });
+    // TODO: !!!!
+    // REMOVE THIS LINE AND UNCOMMENT ALL THE ABOVE LINES
+    return NextResponse.json({ messageId: "030cb85b-9dec-41e7-9a95-c978b86aef50" });
+
   } catch (error: any) {
     console.error('Error generating image:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
