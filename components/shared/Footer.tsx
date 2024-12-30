@@ -2,10 +2,10 @@ const Footer = () => {
   return (
     <footer className="container bg-slate-900 text-white mt-40">
 
-      <section className="py-16 -translate-y-40 rounded-3xl overflow-hidden" style={{ background: `linear-gradient(to bottom, #41d9d9, #ffffff);`}} >
+      <section className="py-16 -translate-y-40 rounded-3xl overflow-hidden" style={{ background: `linear-gradient(to bottom, #41d9d9, #ffffff);` }} >
         <div className="container mx-auto grid grid-cols-10 px-8 lg:px-16">
           {/* Left Image Section */}
-          <div className="col-span-2 w-full">
+          <div className="col-span-10 md:col-span-2 w-full">
             <div className="relative">
               <img
                 src="/footer/1.png"
@@ -16,7 +16,7 @@ const Footer = () => {
           </div>
 
           {/* Middle Text Section */}
-          <div className="col-span-6 w-full text-center flex flex-col items-center justify-center">
+          <div className="col-span-10 md:col-span-6 w-full text-center flex flex-col items-center justify-center">
             <h1 className="text-6xl font-bold text-gray-900">
               Unlock Limitless Creativity: Let AI Bring Imagination to Life.
             </h1>
@@ -26,9 +26,9 @@ const Footer = () => {
 
             {/* Call-to-Action Buttons */}
             <div className="mt-6 flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-4">
-              <button 
-                className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-                style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
+              <button
+                className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold"
+                style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)` }}>
                 <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
                   Get Started Now
                 </span>
@@ -47,7 +47,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="col-span-2 w-full">
+          <div className="col-span-10 md:col-span-2 w-full">
             <div className="absolute bottom-0 right-0">
               <img
                 src="/footer/2.png"
@@ -60,8 +60,8 @@ const Footer = () => {
       </section>
 
       <div className="grid grid-cols-10 gap-8">
-        
-        <div className="col-span-3 space-y-8">
+
+        <div className="col-span-10 md:col-span-3 space-y-8">
           {/* Logo and Description */}
           <div className="bg-slate-800 p-10 rounded-3xl">
             <img src="/footer/logo.svg" alt="" />
@@ -69,7 +69,7 @@ const Footer = () => {
               Experience the future of image creation with our AI-powered tech, where innovation meets imagination to bring your ideas to life.
             </p>
           </div>
-        
+
           {/* Contact Info */}
           <div className="bg-slate-800 p-10 rounded-3xl">
             <h3 className="font-semibold text-lg">Contact</h3>
@@ -101,10 +101,10 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
-       <div className="col-span-7 space-y-8">
-         {/* Subscribe to Newsletter */}
-         <div className="bg-slate-800 p-10 rounded-3xl">
+
+        <div className="col-span-10 md:col-span-7 space-y-8">
+          {/* Subscribe to Newsletter */}
+          <div className="bg-slate-800 p-10 rounded-3xl">
             <h3 className="font-semibold text-4xl">Subscribe to Newsletter</h3>
             <form className="mt-4 flex items-center justify-center space-x-4">
               <input
@@ -112,9 +112,9 @@ const Footer = () => {
                 placeholder="Enter your email address"
                 className="w-[80%] p-3 rounded-md text-white bg-slate-700"
               />
-              <button 
-                className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-                style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
+              <button
+                className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold"
+                style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)` }}>
                 <span className="block w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
                   Subscribe
                 </span>
@@ -124,7 +124,7 @@ const Footer = () => {
               </button>
             </form>
           </div>
-          
+
           {/* Help Centre Image and Info */}
           <div className="bg-slate-800 p-10 rounded-3xl">
             <img
@@ -133,8 +133,8 @@ const Footer = () => {
               className="ml-auto w-[80%] mb-4 rounded-lg"
             />
           </div>
-       </div>
-        
+        </div>
+
       </div>
     </footer>
   );

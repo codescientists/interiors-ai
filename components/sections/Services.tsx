@@ -45,30 +45,30 @@ const Services = () => {
       className="container py-20 relative min-h-screen h-fit overflow-hidden"
     >
       {/* Title and Button Section */}
-      <div className="flex items-start mb-12 py-8">
-        <div className="w-1/2">
+      <div className="flex flex-col md:flex-row items-start mb-12 py-8">
+        <div className="w-full md:w-1/2">
           <p className="flex items-center text-xl font-semibold">
-            <span>Services</span>  <span className="w-14 h-[2px] ml-2" style={{ backgroundImage: `linear-gradient(to left, rgba(5, 13, 51, 0), rgba(5, 13, 51, .8))`}}></span>
+            <span>Services</span>  <span className="w-14 h-[2px] ml-2" style={{ backgroundImage: `linear-gradient(to left, rgba(5, 13, 51, 0), rgba(5, 13, 51, .8))` }}></span>
           </p>
-          <h2 className="text-6xl font-bold">
+          <h2 className="text-4xl md:text-6xl font-bold">
             Our Exclusive Suite of <br /> AI Image Services
           </h2>
         </div>
-        <div className="w-1/2">
+        <div className="w-full md:w-1/2">
           <p className="text-xl font-medium mt-4 mb-6">
             Empower projects with cutting-edge AI services designed to amplify creativity and efficiency. Tailored solutions cover all needs.
           </p>
 
-          <button 
-              className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-              style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
-              <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                Explore All Services
-              </span>
-              <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                Explore All Services
-              </span>
-            </button>
+          <button
+            className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold"
+            style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)` }}>
+            <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+              Explore All Services
+            </span>
+            <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+              Explore All Services
+            </span>
+          </button>
         </div>
       </div>
 

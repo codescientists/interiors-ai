@@ -8,7 +8,7 @@ import React, { useState } from "react";
 
 const Sidebar = () => {
   return (
-    <aside className="w-60 bg-[#1E1F20] p-5 flex flex-col justify-between">
+    <aside className="hidden w-60 bg-[#1E1F20] p-5 lg:flex flex-col justify-between">
       <div className="text-xl font-semibold">
         <Link href={`/`} className="text-white text-2xl font-bold mb-5">Interiores.AI</Link>
         <nav>
@@ -78,7 +78,7 @@ const MainContent = () => {
   const publishImage = async () => {
     setPublishing(true)
 
-    try{
+    try {
       // Automatically upload to Cloudinary after generation
       const uploadedUrl = await uploadImage(image);
 
@@ -88,7 +88,7 @@ const MainContent = () => {
         image: uploadedUrl,
       })
 
-      if(newImage) {
+      if (newImage) {
         alert("Design published")
       }
     } catch (error) {
@@ -96,8 +96,8 @@ const MainContent = () => {
     } finally {
       setPublishing(false);
     }
-    
-  } 
+
+  }
 
   // In case the user signs out while on the page.
   if (!isLoaded || !userId) {
@@ -110,7 +110,7 @@ const MainContent = () => {
 
       {/* Image Preview Section */}
       <div className="mb-5">
-z
+        z
         {image !== null ? (
           <div className="relative w-[32rem] h-[28rem] mx-auto border border-gray-500 rounded-xl overflow-hidden mb-5">
             <img
@@ -126,22 +126,22 @@ z
         )}
 
         {/* Action Buttons */}
-          {
-            image !== null && (
-              <div className="space-x-3 my-4">
-                <button onClick={() => publishImage()} className={`bg-teal-600 text-white py-2 px-2 px-4 font-semibold text-lg rounded cursor-pointer ${publishing && 'opacity-50 cursor-not-allowed'}`} disabled={publishing}>
-                  {publishing ? 'Publishing...' : 'Publish'}
-                </button>
-                <a
-                    href={image} // The image source for the download
-                    download="generated_image.png" // Suggested filename for the download
-                    className="bg-teal-600 text-white py-2 px-2 px-4 font-semibold text-lg rounded cursor-pointer"
-                >
-                    Download
-                </a>
-              </div>
-            )
-          }
+        {
+          image !== null && (
+            <div className="space-x-3 my-4">
+              <button onClick={() => publishImage()} className={`bg-teal-600 text-white py-2 px-2 px-4 font-semibold text-lg rounded cursor-pointer ${publishing && 'opacity-50 cursor-not-allowed'}`} disabled={publishing}>
+                {publishing ? 'Publishing...' : 'Publish'}
+              </button>
+              <a
+                href={image} // The image source for the download
+                download="generated_image.png" // Suggested filename for the download
+                className="bg-teal-600 text-white py-2 px-2 px-4 font-semibold text-lg rounded cursor-pointer"
+              >
+                Download
+              </a>
+            </div>
+          )
+        }
       </div>
 
       {/* Prompt Input and Generate Button */}
@@ -168,7 +168,7 @@ z
 
 const FurnitureSidebar = () => {
   return (
-    <aside className="w-60 bg-[#1E1F20] p-5">
+    <aside className="hidden md:block w-60 bg-[#1E1F20] p-5">
       <h3 className="text-gray-400 text-sm mb-3">Furnitures You Need To Buy</h3>
       <div className="space-y-3">
         <img

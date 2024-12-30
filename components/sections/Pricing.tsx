@@ -9,30 +9,30 @@ import Checkout from "../shared/Checkout";
 import { createUser, getUserById } from "@/lib/actions/user.actions";
 
 const Pricing = () => {
-    const [credits, setCredits] = useState(0);
-    const [loadingCredits, setLoadingCredits] = useState(true);
-    const [userId, setUserId] = useState(null)
-    const { user, isLoaded } = useUser();
-    
-    useEffect(() => {
-      const getCredits = async () => {
-        if(user && isLoaded) {
-          const userInfo = await getUserById(user.id);
-  
-          if (userInfo == null || undefined) {
-            const userData = { clerkId: user.id, email: user?.emailAddresses[0].emailAddress, username: user.firstName }
-            const newUser = await createUser(userData);
-            setCredits(newUser?.creditBalance)
-            setUserId(newUser?._id)
-          }else{
-            setCredits(userInfo.creditBalance)
-            setUserId(userInfo?._id)
-          }
-          setLoadingCredits(false)
+  const [credits, setCredits] = useState(0);
+  const [loadingCredits, setLoadingCredits] = useState(true);
+  const [userId, setUserId] = useState(null)
+  const { user, isLoaded } = useUser();
+
+  useEffect(() => {
+    const getCredits = async () => {
+      if (user && isLoaded) {
+        const userInfo = await getUserById(user.id);
+
+        if (userInfo == null || undefined) {
+          const userData = { clerkId: user.id, email: user?.emailAddresses[0].emailAddress, username: user.firstName }
+          const newUser = await createUser(userData);
+          setCredits(newUser?.creditBalance)
+          setUserId(newUser?._id)
+        } else {
+          setCredits(userInfo.creditBalance)
+          setUserId(userInfo?._id)
         }
+        setLoadingCredits(false)
       }
-      getCredits();
-    }, [isLoaded])  
+    }
+    getCredits();
+  }, [isLoaded])
 
   return (
     <section className="container py-16 px-8">
@@ -63,13 +63,12 @@ const Pricing = () => {
       </div>
 
       <div className="container mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 border w-full">
           {pricingPlans.map((plan) => (
             <div
               key={plan._id}
-              className={`p-8 rounded-3xl text-center shadow-lg ${
-                plan.name === 'Pro Plan' ? 'bg-yellow-300' : 'bg-teal-200'
-              }`}
+              className={`p-8 rounded-3xl text-center shadow-lg ${plan.name === 'Pro Plan' ? 'bg-yellow-300' : 'bg-teal-200'
+                }`}
             >
               <h2 className="text-xl font-semibold mb-4">{plan.name}</h2>
               <p className="text-4xl font-bold">
@@ -85,42 +84,42 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-                <SignedIn>
-                  {
-                    plan.name == 'Trial Plan' ?
-                      <button 
-                      className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-                      style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
-                          <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                              Free
-                          </span>
-                          <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                              Free
-                          </span>
-                      </button>
+              <SignedIn>
+                {
+                  plan.name == 'Trial Plan' ?
+                    <button
+                      className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold"
+                      style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)` }}>
+                      <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                        Free
+                      </span>
+                      <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                        Free
+                      </span>
+                    </button>
                     :
                     <Checkout
-                        plan={plan.name}
-                        amount={plan.price}
-                        credits={plan.credits}
-                        buyerId={userId}
+                      plan={plan.name}
+                      amount={plan.price}
+                      credits={plan.credits}
+                      buyerId={userId}
                     />
-                  }
-                </SignedIn>
-                <SignedOut>
-                    <SignInButton>
-                        <button 
-                        className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold" 
-                        style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)`}}>
-                            <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                                Buy Credit
-                            </span>
-                            <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
-                                Buy Credit
-                            </span>
-                        </button>
-                    </SignInButton>
-                </SignedOut>
+                }
+              </SignedIn>
+              <SignedOut>
+                <SignInButton>
+                  <button
+                    className="group relative overflow-hidden text-white py-3 px-8 rounded-xl text-xl font-semibold"
+                    style={{ backgroundImage: `linear-gradient(140deg, #4080ff, #05f)` }}>
+                    <span className="block transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                      Buy Credit
+                    </span>
+                    <span className="absolute left-[50%] top-full -translate-x-[50%] w-full transition-transform duration-300 ease-in-out transform group-hover:translate-y-[-150%]">
+                      Buy Credit
+                    </span>
+                  </button>
+                </SignInButton>
+              </SignedOut>
             </div>
           ))}
         </div>
